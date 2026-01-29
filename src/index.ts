@@ -71,10 +71,19 @@ async function main(): Promise<void> {
     const { loadTools } = await import('./tools/index.js');
     const { loadResources } = await import('./resources/index.js');
     const { loadPrompts } = await import('./prompts/index.js');
+    console.log('📦 Loading tools...');
     await loadTools(server);
+    console.log('📦 Loading resources...');
     await loadResources(server);
+    console.log('📦 Loading prompts...');
     await loadPrompts(server);
+    console.log('✅ All loaders completed');
 
+    // Log registered items
+    // @ts-expect-error Accessing private property for debugging
+    console.log(`   Tools registered: ${server.options?.tools?.length ?? 'unknown'}`);
+
+    console.log('🚀 Starting server...');
     await server.start({
       transportType: 'httpStream',
       httpStream: {
