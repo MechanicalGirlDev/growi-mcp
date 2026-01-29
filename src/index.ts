@@ -71,13 +71,14 @@ async function main(): Promise<void> {
     const { loadTools } = await import('./tools/index.js');
     const { loadResources } = await import('./resources/index.js');
     const { loadPrompts } = await import('./prompts/index.js');
-    console.log('📦 Loading tools...');
-    await loadTools(server);
-    console.log('📦 Loading resources...');
-    await loadResources(server);
-    console.log('📦 Loading prompts...');
-    await loadPrompts(server);
-    console.log('✅ All loaders completed');
+    // Temporarily disable loaders to test minimal server
+    console.log('📦 Loading tools... (DISABLED FOR TESTING)');
+    // await loadTools(server);
+    console.log('📦 Loading resources... (DISABLED FOR TESTING)');
+    // await loadResources(server);
+    console.log('📦 Loading prompts... (DISABLED FOR TESTING)');
+    // await loadPrompts(server);
+    console.log('✅ All loaders completed (minimal mode)');
 
     // Log registered items
     // @ts-expect-error Accessing private property for debugging
