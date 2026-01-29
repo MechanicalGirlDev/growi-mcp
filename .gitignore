@@ -63,3 +63,7 @@ node_modules/
 nginx/ssl/*.crt
 nginx/ssl/*.key
 nginx/ssl/*.pem
+
+# Let's Encrypt certificates
+certbot/conf/
+certbot/www/
