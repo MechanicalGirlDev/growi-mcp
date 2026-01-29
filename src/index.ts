@@ -7,6 +7,15 @@ import config from './config/default.js';
 import httpConfig from './config/http-config.js';
 import type { GrowiAppConfig } from './config/types.js';
 
+// Add global error handlers for debugging
+process.on('unhandledRejection', (reason, promise) => {
+  console.error('Unhandled Rejection at:', promise, 'reason:', reason);
+});
+
+process.on('uncaughtException', (error) => {
+  console.error('Uncaught Exception:', error);
+});
+
 const server = new FastMCP({
   name: 'growi-mcp',
   version: '1.0.0',
@@ -16,6 +25,15 @@ const server = new FastMCP({
     path: '/health',
     message: 'ok',
   },
+});
+
+// Add event handlers for debugging
+server.on('connect', ({ session }) => {
+  console.log('Client connected:', session);
+});
+
+server.on('disconnect', ({ session }) => {
+  console.log('Client disconnected:', session);
 });
 
 /**
