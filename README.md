@@ -61,42 +61,18 @@ cp .env.example .env
 
 ## 起動方法
 
-### Docker Compose (HTTPS + Let's Encrypt)
+### Docker Compose (HTTPS)
 
-Let's EncryptでIPアドレス用SSL証明書を自動取得・更新します（6日間有効、自動更新）。
-
-1. 初期設定（証明書取得）：
+1. SSL証明書を配置：
    ```bash
-   ./init-letsencrypt.sh <IPアドレス> <メールアドレス>
-   # 例: ./init-letsencrypt.sh 203.0.113.50 your@email.com
+   # nginx/ssl/ に以下を配置
+   # - server.crt (証明書)
+   # - server.key (秘密鍵)
    ```
 
 2. 起動：
    ```bash
-   docker compose up -d
-   ```
-
-3. アクセス：
-   - `https://<IPアドレス>:3001`
-
-証明書は certbot コンテナが12時間ごとに自動更新を試みます。
-
-### Docker Compose (HTTPS + 自己署名証明書)
-
-開発環境や内部利用向け。
-
-1. 証明書を生成：
-   ```bash
-   mkdir -p certbot/conf/live/cert
-   openssl req -x509 -nodes -days 3650 -newkey rsa:2048 \
-     -keyout certbot/conf/live/cert/privkey.pem \
-     -out certbot/conf/live/cert/fullchain.pem \
-     -subj "/CN=localhost"
-   ```
-
-2. 起動：
-   ```bash
-   docker compose up -d nginx growi-mcp
+   docker-compose up -d
    ```
 
 3. アクセス：
