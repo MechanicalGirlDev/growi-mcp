@@ -1,0 +1,34 @@
+import type { AnyFastMCP } from '../commons/types.js';
+import { registerCreatePageTool } from './createPage';
+import { registerDeletePagesTool } from './deletePages';
+import { registerDuplicatePageTool } from './duplicatePages';
+import { registerGetPageTool } from './getPage';
+import { registerGetPageInfoTool } from './getPageInfo';
+import { registerGetPageListingChildrenTool } from './getPageListingChildren';
+import { registerGetPageListingRootTool } from './getPageListingRoot';
+import { registerGetPageTagTool } from './getPageTag';
+import { registerGetRecentPagesTool } from './getRecentPages';
+import { registerPageListingInfoTool } from './pageListingInfo';
+import { registerPublishPageTool } from './publishPage';
+import { registerRenamePageTool } from './renamePage';
+import { registerSearchPagesTool } from './searchPages';
+import { registerUnpublishPageTool } from './unpublishPage';
+import { registerUpdatePageTool } from './updatePage';
+
+export async function loadPageTools(server: AnyFastMCP): Promise<void> {
+  registerCreatePageTool(server);
+  registerUpdatePageTool(server);
+  registerRenamePageTool(server);
+  registerDeletePagesTool(server);
+  registerSearchPagesTool(server);
+  registerPublishPageTool(server);
+  registerUnpublishPageTool(server);
+  registerDuplicatePageTool(server);
+  registerPageListingInfoTool(server);
+  registerGetPageTool(server);
+  registerGetPageInfoTool(server);
+  registerGetPageListingChildrenTool(server);
+  registerGetPageListingRootTool(server);
+  registerGetPageTagTool(server);
+  registerGetRecentPagesTool(server);
+}

@@ -1,0 +1,45 @@
+import apiv3 from '@growi/sdk-typescript/v3';
+import { UserError } from 'fastmcp';
+import { z } from 'zod';
+import { resolveAppName } from '../../../commons/utils/resolve-app-name.js';
+import type { AnyFastMCP } from '../../commons/types.js';
+import { getShareLinksParamSchema } from './schema.js';
+
+export function registerGetShareLinksTool(server: AnyFastMCP): void {
+  server.addTool({
+    name: 'getShareLinks',
+    description: 'Get share links for a specific page in GROWI',
+    parameters: getShareLinksParamSchema,
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: true,
+      title: 'Get Share Links',
+    },
+    execute: async (params) => {
+      try {
+        // Validate parameters
+        const { appName, ...getShareLinksParams } = getShareLinksParamSchema.parse(params);
+        const resolvedAppName = resolveAppName(appName);
+
+        // Execute operation using SDK
+        const result = await apiv3.getShareLinks(getShareLinksParams, { appName: resolvedAppName });
+
+        return JSON.stringify(result);
+      } catch (error) {
+        // Handle validation errors
+        if (error instanceof z.ZodError) {
+          throw new UserError('Invalid parameters provided', {
+            validationErrors: error.errors,
+          });
+        }
+
+        // Handle unexpected errors
+        throw new UserError('Failed to get share links', {
+          originalError: error instanceof Error ? error.message : String(error),
+        });
+      }
+    },
+  });
+}

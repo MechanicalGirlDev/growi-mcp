@@ -1,0 +1,44 @@
+import apiv3 from '@growi/sdk-typescript/v3';
+import { UserError } from 'fastmcp';
+import { z } from 'zod';
+import { resolveAppName } from '../../../commons/utils/resolve-app-name.js';
+import type { AnyFastMCP } from '../../commons/types.js';
+import { pageListingInfoParamSchema } from './schema.js';
+
+export function registerPageListingInfoTool(server: AnyFastMCP): void {
+  server.addTool({
+    name: 'pageListingInfo',
+    description: 'Get summary information for pages in GROWI by IDs or path',
+    parameters: pageListingInfoParamSchema,
+    annotations: {
+      readOnlyHint: true,
+      destructiveHint: false,
+      idempotentHint: true,
+      openWorldHint: true,
+      title: 'Get summary information for pages',
+    },
+    execute: async (params) => {
+      try {
+        // Validate parameters
+        const { appName, ...pageListingInfoParams } = pageListingInfoParamSchema.parse(params);
+        const resolvedAppName = resolveAppName(appName);
+
+        // Execute operation using SDK
+        const result = await apiv3.getInfoForPageListing(pageListingInfoParams, { appName: resolvedAppName });
+        return JSON.stringify(result);
+      } catch (error) {
+        // Handle validation errors
+        if (error instanceof z.ZodError) {
+          throw new UserError('Invalid parameters provided', {
+            validationErrors: error.errors,
+          });
+        }
+
+        // Handle unexpected errors
+        throw new UserError('Failed to get page listing info', {
+          originalError: error instanceof Error ? error.message : String(error),
+        });
+      }
+    },
+  });
+}
