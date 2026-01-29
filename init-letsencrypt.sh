@@ -29,10 +29,10 @@ if [ ! -f "$CERT_PATH/fullchain.pem" ]; then
 fi
 
 echo "==> Starting nginx..."
-docker-compose up -d nginx
+docker compose up -d nginx
 
 echo "==> Requesting Let's Encrypt certificate for IP: $IP_ADDRESS..."
-docker-compose run --rm certbot certonly \
+docker compose run --rm certbot certonly \
     --webroot \
     --webroot-path=/var/www/certbot \
     --email "$EMAIL" \
@@ -43,7 +43,7 @@ docker-compose run --rm certbot certonly \
     --cert-name cert
 
 echo "==> Reloading nginx..."
-docker-compose exec nginx nginx -s reload
+docker compose exec nginx nginx -s reload
 
 echo "==> Done! Certificate installed for $IP_ADDRESS"
 echo "==> Access: https://$IP_ADDRESS:3001"

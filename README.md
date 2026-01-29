@@ -73,7 +73,7 @@ Let's EncryptでIPアドレス用SSL証明書を自動取得・更新します�
 
 2. 起動：
    ```bash
-   docker-compose up -d
+   docker compose up -d
    ```
 
 3. アクセス：
@@ -96,7 +96,7 @@ Let's EncryptでIPアドレス用SSL証明書を自動取得・更新します�
 
 2. 起動：
    ```bash
-   docker-compose up -d nginx growi-mcp
+   docker compose up -d nginx growi-mcp
    ```
 
 3. アクセス：
