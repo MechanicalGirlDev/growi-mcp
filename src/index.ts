@@ -89,11 +89,12 @@ async function main(): Promise<void> {
       transportType: 'httpStream',
       httpStream: {
         port: httpConfig.port,
+        host: httpConfig.host,
       },
     });
 
     console.log(`🚀 GROWI MCP HTTP server started on http://${httpConfig.host}:${httpConfig.port}`);
-    console.log(`   - MCP endpoint: http://${httpConfig.host}:${httpConfig.port}/stream`);
+    console.log(`   - MCP endpoint: http://${httpConfig.host}:${httpConfig.port}/mcp`);
     console.log(`   - Health check: http://${httpConfig.host}:${httpConfig.port}/health`);
   } catch (error) {
     console.error('Failed to start server:', error instanceof Error ? error.message : String(error));
