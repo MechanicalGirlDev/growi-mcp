@@ -1,15 +1,15 @@
 {
-  "name": "@growi/mcp",
+  "name": "growi-mcp-server",
   "version": "1.0.0",
   "description": "A Model Context Protocol (MCP) HTTP server with Bearer authentication that connects AI models to GROWI wiki content.",
   "type": "module",
   "license": "MIT",
-  "author": "Yuki Takei <yuki@weseek.co.jp>",
+  "author": "nop <noplab90@gmail.com>",
   "keywords": ["mcp", "growi", "llm", "ai", "http"],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
-    "@growi/mcp": "./dist/index.js"
+    "growi-mcp-server": "./dist/index.js"
   },
   "files": ["dist", "README.md", "LICENSE"],
   "scripts": {
