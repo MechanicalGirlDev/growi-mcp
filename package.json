@@ -5,13 +5,23 @@
   "type": "module",
   "license": "MIT",
   "author": "nop <noplab90@gmail.com>",
-  "keywords": ["mcp", "growi", "llm", "ai", "http"],
+  "keywords": [
+    "mcp",
+    "growi",
+    "llm",
+    "ai",
+    "http"
+  ],
   "main": "dist/index.js",
   "types": "dist/index.d.ts",
   "bin": {
     "growi-mcp-server": "./dist/index.js"
   },
-  "files": ["dist", "README.md", "LICENSE"],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "scripts": {
     "build": "pnpm ncc build ./src/index.ts --license ./LICENSE",
     "prebuild": "pnpm run clean",
@@ -25,7 +35,7 @@
   "packageManager": "pnpm@10.11.0",
   "dependencies": {
     "dotenv-flow": "^4.1.0",
-    "fastmcp": "^2.0.0",
+    "fastmcp": "^3.30.1",
     "zod": "^3.25.7"
   },
   "devDependencies": {
