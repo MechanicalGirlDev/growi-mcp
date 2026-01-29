@@ -16,10 +16,24 @@ process.on('uncaughtException', (error) => {
   console.error('Uncaught Exception:', error);
 });
 
+// Wrap authenticate function to log errors
+const authenticateWithLogging = async (request: Parameters<typeof authenticateBearer>[0]) => {
+  console.log('🔐 Authentication request received');
+  console.log('   Headers:', JSON.stringify(request.headers, null, 2));
+  try {
+    const result = await authenticateBearer(request);
+    console.log('✅ Authentication successful:', result);
+    return result;
+  } catch (error) {
+    console.error('❌ Authentication failed:', error);
+    throw error;
+  }
+};
+
 const server = new FastMCP({
   name: 'growi-mcp',
   version: '1.0.0',
-  authenticate: authenticateBearer,
+  authenticate: authenticateWithLogging,
   health: {
     enabled: true,
     path: '/health',
