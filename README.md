@@ -61,22 +61,35 @@ cp .env.example .env
 
 ## 起動方法
 
-### Docker Compose (HTTPS)
+### Docker Compose (Cloudflare Tunnel)
 
-1. SSL証明書を配置：
+Cloudflare Tunnelを使用して、自己署名証明書なしでHTTPSアクセスを実現します。
+
+1. Cloudflare Tunnelを作成：
+   - [Cloudflare Zero Trust](https://one.dash.cloudflare.com/) にアクセス
+   - Networks > Tunnels > Create a tunnel
+   - トンネル名を入力して作成
+   - トークンをコピー
+
+2. トンネルの Public Hostname を設定：
+   - Subdomain: 任意（例: `growi-mcp`）
+   - Domain: Cloudflareに登録済みのドメイン
+   - Service Type: `HTTP`
+   - URL: `growi-mcp:3001`
+
+3. `.env`を設定：
    ```bash
-   # nginx/ssl/ に以下を配置
-   # - server.crt (証明書)
-   # - server.key (秘密鍵)
+   cp .env.example .env
+   # CLOUDFLARE_TUNNEL_TOKEN にトークンを設定
    ```
 
-2. 起動：
+4. 起動：
    ```bash
-   docker-compose up -d
+   docker compose up -d
    ```
 
-3. アクセス：
-   - `https://localhost:3001`
+5. アクセス：
+   - `https://growi-mcp.your-domain.com/mcp`
 
 ### ローカル開発
 

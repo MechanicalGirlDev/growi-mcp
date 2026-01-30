@@ -21,13 +21,12 @@ services:
       retries: 3
       start_period: 10s
 
-  nginx:
-    image: nginx:alpine
-    ports:
-      - "3001:443"
-    volumes:
-      - ./nginx/nginx.conf:/etc/nginx/conf.d/default.conf:ro
-      - ./nginx/ssl:/etc/nginx/ssl:ro
+  # Cloudflare Tunnel for HTTPS access
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=${CLOUDFLARE_TUNNEL_TOKEN}
     depends_on:
       - growi-mcp
     restart: unless-stopped
